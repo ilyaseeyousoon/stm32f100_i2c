@@ -36,7 +36,21 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
+#define MASTER_REQ_READ    0x12
+#define MASTER_REQ_WRITE   0x34
+/* Buffer used for transmission */
+uint8_t aTxBuffer[] = " ****I2C_TwoBoards communication based on IT****  ****I2C_TwoBoards communication based on IT****  ****I2C_TwoBoards communication based on IT**** ";
+#define I2C_ADDRESS        0x3E
+/* Exported macro ------------------------------------------------------------*/
+#define COUNTOF(__BUFFER__)   (sizeof(__BUFFER__) / sizeof(*(__BUFFER__)))
 
+/* Size of Transmission buffer */
+#define TXBUFFERSIZE                      (COUNTOF(aTxBuffer) - 1)
+/* Size of Reception buffer */
+#define RXBUFFERSIZE                      TXBUFFERSIZE
+uint8_t aRxBuffer[RXBUFFERSIZE];
+uint16_t hTxNumData = 0, hRxNumData = 0;
+uint8_t bTransferRequest = 0;
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -85,6 +99,75 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+		HAL_Delay(5000);
+		   /* Initialize number of data variables */
+    hTxNumData = TXBUFFERSIZE;
+    hRxNumData = RXBUFFERSIZE;
+
+    /* Update bTransferRequest to send buffer write request for Slave */
+    bTransferRequest = MASTER_REQ_WRITE;
+
+    /*##-2- Master sends write request for slave #############################*/
+    while(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)&bTransferRequest, 1)!= HAL_OK)
+    {
+    }
+
+    while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+    {
+    }
+
+    /*##-3- Master sends number of data to be written ########################*/
+    while(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)&hTxNumData, 2)!= HAL_OK)
+    {
+    }
+
+    while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+    {
+    }
+
+    /*##-4- Master sends aTxBuffer to slave ##################################*/
+    while(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)aTxBuffer, TXBUFFERSIZE)!= HAL_OK)
+    {
+     
+		}
+
+
+    while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+    {
+    }
+
+    /* Update bTransferRequest to send buffer read request for Slave */
+    bTransferRequest = MASTER_REQ_READ;
+
+    /*##-5- Master sends read request for slave ##############################*/
+    while(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)&bTransferRequest, 1)!= HAL_OK)
+    {
+		}
+    while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+    {
+    }
+
+    /*##-6- Master sends number of data to be read ###########################*/
+    while(HAL_I2C_Master_Transmit_IT(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)&hRxNumData, 2)!= HAL_OK)
+    {
+      
+    }
+
+
+    while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+    {
+    }
+
+    /*##-7- Master receives aRxBuffer from slave #############################*/
+    while(HAL_I2C_Master_Receive_IT(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)aRxBuffer, RXBUFFERSIZE)!= HAL_OK)
+    {
+    }
+    while (HAL_I2C_GetState(&hi2c1) != HAL_I2C_STATE_READY)
+    {
+    }
+   
+
+	}
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -92,7 +175,7 @@ int main(void)
   }
   /* USER CODE END 3 */
 
-}
+
 
 /** System Clock Configuration
 */
