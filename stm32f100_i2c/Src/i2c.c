@@ -38,7 +38,7 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN 0 */
-#define I2C_ADDRESS        0x3E
+#define I2C_ADDRESS        0x02
 
 /* USER CODE END 0 */
 
@@ -54,7 +54,7 @@ void MX_I2C1_Init(void)
   hi2c1.Init.OwnAddress1 = I2C_ADDRESS;
   hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
   hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLED;
-  hi2c1.Init.OwnAddress2 = 0xFF;
+  hi2c1.Init.OwnAddress2 = 0x00;
   hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLED;
   hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLED;
   HAL_I2C_Init(&hi2c1);
@@ -63,7 +63,10 @@ void MX_I2C1_Init(void)
 
 void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
 {
-
+	 
+//HAL_I2C_MspDeInit(&hi2c1);
+//	   /* Peripheral clock enable */
+    __I2C1_CLK_ENABLE();
   GPIO_InitTypeDef GPIO_InitStruct;
   if(hi2c->Instance==I2C1)
   {
@@ -80,8 +83,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-    /* Peripheral clock enable */
-    __I2C1_CLK_ENABLE();
+
 
     /* Peripheral interrupt init*/
     HAL_NVIC_SetPriority(I2C1_EV_IRQn, 1, 0);
