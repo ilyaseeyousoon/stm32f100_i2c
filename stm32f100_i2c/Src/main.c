@@ -99,12 +99,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		HAL_Delay(5000);
-
+		HAL_Delay(3000);
+		 HAL_I2C_Master_Receive(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)&gg, 1,10000);
 		
 
 
-			  HAL_I2C_Master_Receive(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)&gg, 1,100);
+			 
 			
 		
 
