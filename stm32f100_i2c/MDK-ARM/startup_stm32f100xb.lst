@@ -499,13 +499,13 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend="stm32f100_i2c configuration\startup_stm32f100xb.d" -o"stm32f100_i
-2c configuration\startup_stm32f100xb.o" -ID:\ALL_PROJ\stm32f100_disc_programs\s
-tm32f100_i2c\stm32f100_i2c\MDK-ARM\RTE -ID:\2\ARM\PACK\ARM\CMSIS\4.3.0\CMSIS\In
-clude -ID:\2\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include --predefine="__EV
-AL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 
-515" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_MD_VL SETA 1" --list=sta
-rtup_stm32f100xb.lst ../Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templates/arm/
-startup_stm32f100xb.s
+2c configuration\startup_stm32f100xb.o" -IC:\Users\Илья\Desktop\15.31\stm32f100
+_i2c-something-work\stm32f100_i2c\MDK-ARM\RTE -ID:\2\ARM\PACK\ARM\CMSIS\4.3.0\C
+MSIS\Include -ID:\2\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include --predefin
+e="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSIO
+N SETA 515" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_MD_VL SETA 1" --l
+ist=startup_stm32f100xb.lst ../Drivers/CMSIS/Device/ST/STM32F1xx/Source/Templat
+es/arm/startup_stm32f100xb.s
 
 
 

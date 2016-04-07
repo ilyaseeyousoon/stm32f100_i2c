@@ -51,7 +51,7 @@ uint8_t aTxBuffer[] = " ****I2C_TwoBoards communication based on IT****  ****I2C
 uint8_t aRxBuffer[RXBUFFERSIZE];
 uint16_t hTxNumData = 0, hRxNumData = 0;
 uint8_t bTransferRequest = 0;
-uint8_t gg=0x33;
+uint16_t gg=0x33;
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -99,12 +99,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		HAL_Delay(3000);
-		 HAL_I2C_Master_Receive(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)&gg, 1,10000);
+		HAL_Delay(500);
+
 		
 
 
-			 
+			  HAL_I2C_Master_Receive(&hi2c1, (uint16_t)I2C_ADDRESS, (uint8_t*)&gg, 2,100);
 			
 		
 
